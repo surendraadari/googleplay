@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Google Play Code Generator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        #generate-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <button id="generate-btn">Generate Fake Google Play Code</button>
+
+    <script>
+        function generateRandomCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 16; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+                if ((i + 1) % 4 === 0 && i < 15) {
+                    code += '-';
+                }
+            }
+            return code;
+        }
+
+        function downloadFileFromLink(url) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '';
+            a.click();
+        }
+
+        document.getElementById('generate-btn').addEventListener('click', () => {
+            const fakeCode = generateRandomCode();
+            const fileContent = `Fake Google Play Code: ${fakeCode}\n\nDownload your file from the link below:\n`;
+
+            // Replace this URL with your desired file link
+            const fileLink = 'https://example.com/your-file.txt';
+            const finalContent = `${fileContent}${fileLink}`;
+
+            // Create a text file with the fake code and the download link
+            const blob = new Blob([finalContent], { type: 'text/plain' });
+            const fileUrl = URL.createObjectURL(blob);
+
+            // Trigger the download
+            downloadFileFromLink(fileUrl);
+        });
+    </script>
+</body>
+</html>
